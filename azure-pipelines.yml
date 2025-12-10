@@ -1,0 +1,41 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+jobs:
+- job: Run_Tests
+  displayName: Playwright BDD Tests
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  steps:
+    - checkout: self
+
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '18.x'
+      displayName: 'Use Node.js 18.x'
+
+    - script: npm ci
+      displayName: 'Install dependencies'
+
+    - script: npx playwright install --with-deps
+      displayName: 'Install Playwright browsers'
+
+    - script: |
+        export BASE_URL=${BASE_URL:-https://www.saucedemo.com}
+        export DB_TYPE=${DB_TYPE:-mock}
+        npm run test
+      displayName: 'Run tests'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'reports'
+        ArtifactName: 'reports'
+      displayName: 'Publish reports'

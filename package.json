@@ -1,0 +1,32 @@
+{
+  "name": "playwright-poc-bdd",
+  "version": "1.0.0",
+  "description": "POC: Playwright + TypeScript + Cucumber BDD (SauceDemo)",
+  "scripts": {
+    "prepare": "npx playwright install",
+    "test": "cucumber-js --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --format json:reports/cucumber.json",
+    "test:debug": "cucumber-js --require-module ts-node/register --require src/support/**/*.ts --require src/steps/**/*.ts --format progress",
+    "report": "node scripts/generate-report.js",
+    "clean": "rimraf reports screenshots logs",
+    "playwright:install": "npx playwright install"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^9.2.0",
+    "dotenv": "^16.0.0",
+    "multiple-cucumber-html-reporter": "^1.18.0",
+    "pino": "^8.14.0",
+    "playwright": "^1.38.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/mssql": "^9.1.8",
+    "@types/node": "^20.4.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.50.0",
+    "mssql": "^9.1.1",
+    "mysql2": "^3.3.0",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.0"
+  }
+}
